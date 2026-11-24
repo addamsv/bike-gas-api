@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/google-apps-script": "^2.0.15",
+    "jest": "^30.5.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "./tests/setup.js"
+    ]
+  }
+}

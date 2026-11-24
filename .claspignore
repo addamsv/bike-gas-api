@@ -1,0 +1,33 @@
+# node_modules 
+node_modules/**
+
+app_secrets_setup/**
+
+# conf 
+conf/**
+
+# .git, .vscode, .env)
+.*
+**/.*
+
+# 
+package.json
+package-lock.json
+yarn.lock
+tsconfig.json
+webpack.config.js
+
+#  
+README.md
+CHANGELOG.md
+docs/**
+
+tests/**
+*.test.js
+*.spec.ts
+
+*.ts
+
+# 
+*.log
+temp/**

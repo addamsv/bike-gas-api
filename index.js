@@ -1,8 +1,3 @@
-if (typeof require !== 'undefined') {
-    var { productPostController } = require('./endpoints/products');
-    var { commentPostController } = require('./endpoints/comment');
-}
-
 "use strict";
 
 /*
@@ -16,6 +11,8 @@ function doGET(req) {
         case "user": { return userGetController(action, req); }
         case "comment": { return commentGetController(action, req); }
         case "product": { return productGetController(action, req); }
+        case "profile": { return profileGetController(action, req); }
+        case "order": { return orderGetController(action, req); }
         case "food": { return foodGetController(action, req); }
         default: { throw new Error("There is no GET endpoint: " + endpoint); }
     }

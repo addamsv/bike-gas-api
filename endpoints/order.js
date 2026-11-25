@@ -151,3 +151,10 @@ function orderPostController(action, req) {
         }
     }
 }
+
+if (typeof module !== 'undefined') {
+    module.exports = {
+        orderGetController,
+        orderPostController
+    };
+}

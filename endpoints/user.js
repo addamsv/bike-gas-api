@@ -12,11 +12,7 @@ function userGetController(action, req) {
                 throw new RetError(401, "user ID is missed");
             }
 
-            return {
-                // params: req?.parameters,
-                // users: findById(userID, "Users")
-                ...findById(userID, "Users")
-            };
+            return findById(userID, "Users");
         }
         default: {
             throw new RetError(401, "something goes wrong (usr get def)");
@@ -35,26 +31,31 @@ function userPostController(action, req) {
         case "create": {
             try {
                 // isAuth & role == "ROLE_ADMIN"
-                const userWithAdminRightData = isAuth(req);
+                // const userWithAdminRightData = 
+                isAuth(req);
 
-                if (!userWithAdminRightData.isSuccess) {
-                    throw new RetError(403, "access denied");
-                }
+                // if (!userWithAdminRightData.isSuccess) {
+                //     throw new RetError(403, "access denied");
+                // }
 
                 const body = JSON.parse(req.postData.contents);
 
-                if (!body?.userName || !body?.userPass) {
-                    throw new RetError(HttpStatus.BAD_REQUEST, "username or pass in BODY failed");
+                if (!body?.data) {
+                    throw new Error("data in BODY failed");
                 }
-                const { userName: user_name, userPass: user_pass, ...rest } = body;
+                // if (!body?.userName || !body?.userPass) {
+                //     throw new RetError(HttpStatus.BAD_REQUEST, "username or pass in BODY failed");
+                // }
+                // const { userName: user_name, userPass: user_pass, ...rest } = body;
 
-                const updatedBody = { user_name, user_pass, ...rest };
+                // const updatedBody = { user_name, user_pass, ...rest };
+                const data = JSON.parse(body.data);
 
-                return {
-                    // params: req,
-                    // user: create(body, "Users")
-                    ...create(updatedBody, "Users")
-                };
+                const returnData = create(data, "Users");
+
+                sendEmail("reg user " + returnData.data?.user_name);
+
+                return returnData;
             }
             catch (e) {
                 throw new RetError(HttpStatus.FORBIDDEN, "err: " + e);
@@ -85,14 +86,17 @@ function userPostController(action, req) {
 
             const updatedBody = { user_name, user_pass, ...rest };
 
-            return {
-                // params: req,
-                // users: updateById(userID, "Users", item)
-                ...updateById(userID, "Users", updatedBody)
-            };
+            return updateById(userID, "Users", updatedBody);
         }
         default: {
             throw new Error("something goes wrong (usr pst def)");
         }
     }
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = {
+        userGetController,
+        userPostController
+    };
 }

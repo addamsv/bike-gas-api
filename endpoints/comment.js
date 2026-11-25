@@ -1,20 +1,5 @@
 "use strict";
 
-if (typeof require !== 'undefined') {
-    Object.assign(global,
-        // const { ENV, HttpStatus }
-        require('../app/constant'),
-        // const { isAuth }
-        require('../services/auth'),
-        // const { RetError }
-        require('../app/exceptions'),
-        // const { sendEmail }
-        require('../services/mail'),
-        // const { findAll, findById, create, deleteById, updateById }
-        require('../model/persist')
-    );
-}
-
 function commentGetController(action, req) {
     switch (action) {
         case "findCommentByProductId": {
@@ -26,9 +11,7 @@ function commentGetController(action, req) {
 
             const res = getByHeaderName(bookId, "bookId", "Comments");
 
-            return {
-                ...res
-            };
+            return res;
         }
         default: {
             throw new RetError(401, e.message);
@@ -66,11 +49,7 @@ function commentPostController(action, req) {
                 sendEmail("comment " + returnData.data?.bookId + "by user: " + returnData.
                     data?.owner, returnData.data?.text);
 
-                return {
-                    // params: req,
-                    // comment: create(body, "Comments")
-                    ...returnData
-                };
+                return returnData;
             }
             catch (e) {
                 throw new RetError(401, e.message);
@@ -83,10 +62,7 @@ function commentPostController(action, req) {
                 throw new RetError(401, "comment ID failed");
             }
 
-            return {
-                // params: req,
-                ...deleteById(commentID, "Comments")
-            };
+            return deleteById(commentID, "Comments");
         }
         case "updateById": {
             // const {commentID} = req.parameter;
@@ -96,16 +72,14 @@ function commentPostController(action, req) {
                 throw new RetError(401, "comment ID failed");
             }
 
-            return {
-                // params: req,
-                ...updateById(commentID, "Comments", item)
-            };
+            return updateById(commentID, "Comments", item);
         }
         default: {
             throw new Error("something goes wrong (usr pst def)");
         }
     }
 }
+
 if (typeof module !== 'undefined') {
     module.exports = {
         commentGetController,

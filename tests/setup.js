@@ -1,4 +1,36 @@
+"use strict";
+
 const crypto = require('crypto');
+
+// should be before require constant
+const mockProperties = {
+  BASIC_OAUTH: 'Basic U2VyZ2V5OjEyMzQ1',
+  SECRET_KEY: 'L16ASVwsStHbN1V44K0f7xM4vJb3lvC3rrHGRCloTOASVD3f',
+};
+
+global.PropertiesService = {
+  getScriptProperties: jest.fn(() => ({
+    getProperty: jest.fn((key) => mockProperties[key] || null),
+    setProperty: jest.fn((key, val) => { mockProperties[key] = val; }),
+    setProperties: jest.fn((obj) => Object.assign(mockProperties, obj))
+  }))
+};
+
+Object.assign(global,
+  require('../app/constant'), // const { ENV, HttpStatus }
+  require('../app/exceptions'), // const { RetError }
+
+  require('../services/auth'), // const { isAuth }
+  require('../services/mail'), // const { sendEmail }
+  require('../model/persist'), // const { findAll, findById, create, deleteById, updateById }
+
+  // { PostController, GetController } 
+  require('../endpoints/comment'),
+  require('../endpoints/order'),
+  require('../endpoints/products'),
+  require('../endpoints/profile'),
+  require('../endpoints/user'),
+);
 
 const toBuffer = (input) => {
   if (Array.isArray(input)) {
@@ -10,6 +42,7 @@ const toBuffer = (input) => {
 const toGasBytes = (buf) => {
   return Array.from(new Int8Array(buf.buffer, buf.byteOffset, buf.byteLength));
 };
+
 
 global.Utilities = {
   getUuid: jest.fn(() => 'mocked-uuid-1234'),
@@ -43,18 +76,6 @@ global.Utilities = {
   })
 };
 
-const mockProperties = {
-  BASIC_OAUTH: 'Basic U2VyZ2V5OjEyMzQ1',
-  SECRET_KEY: 'L16ASVwsStHbN1V44K0f7xM4vJb3lvC3rrHGRCloTOASVD3f',
-};
-
-global.PropertiesService = {
-  getScriptProperties: jest.fn(() => ({
-    getProperty: jest.fn((key) => mockProperties[key] || null),
-    setProperty: jest.fn((key, val) => { mockProperties[key] = val; }),
-    setProperties: jest.fn((obj) => Object.assign(mockProperties, obj))
-  }))
-};
 
 /* global.SpreadsheetApp */
 

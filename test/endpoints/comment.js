@@ -4,10 +4,10 @@
 function findCommentByProductId_test() {
   const res = doGET({
     parameter: {
-      endpoint: "comment",
+      endpoint: "comments",
       action: "findCommentByProductId",
       method: "GET",
-      bookId: "1001"
+      product_id: "1001"
     }
   });
 
@@ -21,7 +21,7 @@ function commentCreate_test() {
   const data = JSON.stringify(
     {
       "id": 11,
-      "bookId": 1001,
+      "product_id": 1001,
       "iat": "27.5.2025 15:2",
       "owner": 2,
       "text": "Waw"
@@ -29,7 +29,7 @@ function commentCreate_test() {
   );
 
   const res = doPOST({
-    parameter: { endpoint: "comment", action: "create", method: "POST" },
+    parameter: { endpoint: "comments", action: "create", method: "POST" },
     postData: {
       contents: JSON.stringify({
         authorization: ENV.BASIC_OAUTH,

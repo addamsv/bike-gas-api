@@ -11,6 +11,8 @@
     "jest": "^30.5.2"
   },
   "jest": {
+    "verbose": true,
+    "globalSetup": "./tests/jest.global-setup.js",
     "setupFiles": [
       "./tests/setup.js"
     ]

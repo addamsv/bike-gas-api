@@ -1,18 +1,5 @@
 "use strict";
 
-if (typeof require !== 'undefined') {
-    Object.assign(global,
-        // const { ENV, HttpStatus }
-        require('../app/constant'),
-        // const { isAuth }
-        require('../services/auth'),
-        // const { RetError }
-        require('../app/exceptions'),
-        // const { findAll, findById, create, deleteById, updateById }
-        require('../model/persist')
-    );
-}
-
 function productGetController(action, req) {
     switch (action) {
         case "findAll": {

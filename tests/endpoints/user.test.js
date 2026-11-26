@@ -16,7 +16,9 @@ describe('User Endpoint tests', () => {
     });
 
     const res = doPOST({
-      parameter: { endpoint: "user", action: "create", method: "POST" },
+      pathInfo: "api/v1/users",
+      // parameter: { endpoint: "users", action: "create", method: "POST" },
+      parameter: { action: "create" },
       postData: {
         contents: JSON.stringify({
           authorization: ENV.BASIC_OAUTH,
@@ -25,7 +27,6 @@ describe('User Endpoint tests', () => {
       }
     })
 
-    console.log(res)
   });
   test("read", () => {
   });

@@ -36,7 +36,9 @@ describe('Order Endpoint tests', () => {
     });
 
     const res = doPOST({
-      parameter: { endpoint: "order", action: "create", method: "POST" },
+      pathInfo: "api/v1/orders",
+      // parameter: { endpoint: "orders", action: "create", method: "POST" },
+      parameter: { action: "create" },
       postData: {
         contents: JSON.stringify({
           authorization: ENV.BASIC_OAUTH,
@@ -45,7 +47,6 @@ describe('Order Endpoint tests', () => {
       }
     });
 
-    console.log(res)
   });
   test("read", () => {
   });

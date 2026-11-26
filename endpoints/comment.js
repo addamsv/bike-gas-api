@@ -3,13 +3,13 @@
 function commentGetController(action, req) {
     switch (action) {
         case "findCommentByProductId": {
-            const { bookId } = req.parameter;
+            const { product_id } = req.parameter;
 
-            if (!bookId) {
+            if (!product_id) {
                 throw new Error("comment ID is missed");
             }
 
-            const res = getByHeaderName(bookId, "bookId", "Comments");
+            const res = getByHeaderName(product_id, "product_id", "Comments");
 
             return res;
         }
@@ -46,7 +46,7 @@ function commentPostController(action, req) {
 
                 const returnData = create(data, "Comments");
 
-                sendEmail("comment " + returnData.data?.bookId + "by user: " + returnData.
+                sendEmail("comment " + returnData.data?.product_id + "by user: " + returnData.
                     data?.owner, returnData.data?.text);
 
                 return returnData;

@@ -16,7 +16,7 @@ function testDoPOST_Profile_create() {
   });
 
   const res = doPOST({
-    parameter: { endpoint: "profile", action: "create", method: "POST" },
+    parameter: { endpoint: "profiles", action: "create", method: "POST" },
     postData: {
       contents: JSON.stringify({
         authorization: ENV.BASIC_OAUTH,

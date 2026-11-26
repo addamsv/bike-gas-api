@@ -3,7 +3,7 @@ function findByOrderId_test() {
   const res = doPOST(
     {
       parameter: {
-        endpoint: "order",
+        endpoint: "orders",
         action: "findByOrderId",
         method: "POST"
       },
@@ -22,7 +22,7 @@ function findByOrderId_test() {
 function orderFindById_test() {
   const res = doPOST({
     parameter: {
-      endpoint: "order",
+      endpoint: "orders",
       action: "orderFindById",
       method: "POST"
     },
@@ -74,7 +74,7 @@ function orderCreate_test() {
   });
 
   const res = doPOST({
-    parameter: { endpoint: "order", action: "create", method: "POST" },
+    parameter: { endpoint: "orders", action: "create", method: "POST" },
     postData: {
       contents: JSON.stringify({
         authorization: ENV.BASIC_OAUTH,

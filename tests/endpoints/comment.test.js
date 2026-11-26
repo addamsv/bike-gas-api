@@ -6,7 +6,7 @@ describe('Comments Endpoint tests', () => {
     const data = JSON.stringify(
       {
         "id": 11,
-        "bookId": 1001,
+        "product_id": 1001,
         "iat": "27.5.2025 15:2",
         "owner": 2,
         "text": "Waw"
@@ -14,7 +14,13 @@ describe('Comments Endpoint tests', () => {
     );
 
     const res = doPOST({
-      parameter: { endpoint: "comment", action: "create", method: "POST" },
+      pathInfo: "api/v1/comments",
+      // parameter: {
+      // endpoint: "comments",
+      // action: "create",
+      // method: "POST"
+      // },
+      parameter: { action: "create" },
       postData: {
         contents: JSON.stringify({
           authorization: ENV.BASIC_OAUTH,
@@ -23,7 +29,6 @@ describe('Comments Endpoint tests', () => {
       }
     });
 
-    console.log(res)
   });
   test("read", () => {
   });

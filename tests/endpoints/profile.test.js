@@ -18,7 +18,9 @@ describe('Profile Endpoint tests', () => {
     });
 
     const res = doPOST({
-      parameter: { endpoint: "profile", action: "create", method: "POST" },
+      pathInfo: "api/v1/profiles",
+      // parameter: { endpoint: "profiles", action: "create", method: "POST" },
+      parameter: { action: "create" },
       postData: {
         contents: JSON.stringify({
           authorization: ENV.BASIC_OAUTH,
@@ -27,7 +29,6 @@ describe('Profile Endpoint tests', () => {
       }
     })
 
-    console.log(res)
   });
   test("read", () => {
   });

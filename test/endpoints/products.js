@@ -46,7 +46,7 @@ function testDoPOST_Products_create() {
   });
 
   const res = doPOST({
-    parameter: { endpoint: "product", action: "create", method: "POST" },
+    parameter: { endpoint: "products", action: "create", method: "POST" },
     postData: {
       contents: JSON.stringify({
         authorization: ENV.BASIC_OAUTH,

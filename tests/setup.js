@@ -105,7 +105,7 @@ mockData = {
     [1, '1', 'John', 'Dore'],
   ],
   Comments: [
-    ['id', 'owner', 'bookId', 'iat', 'text'],
+    ['id', 'owner', 'product_id', 'iat', 'text'],
     [1, '1', '1', '10-11-26'],
   ],
   Notifications: [

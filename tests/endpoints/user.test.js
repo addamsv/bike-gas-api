@@ -16,9 +16,11 @@ describe('User Endpoint tests', () => {
     });
 
     const res = doPOST({
-      pathInfo: "api/v1/users",
       // parameter: { endpoint: "users", action: "create", method: "POST" },
-      parameter: { action: "create" },
+      parameter: {
+        rout: "api/v1/users",
+        action: "create"
+      },
       postData: {
         contents: JSON.stringify({
           authorization: ENV.BASIC_OAUTH,

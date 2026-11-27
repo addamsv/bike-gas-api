@@ -48,9 +48,11 @@ describe('Products Endpoint tests', () => {
     });
 
     const res = doPOST({
-      pathInfo: "api/v1/products",
       // parameter: { endpoint: "products", action: "create", method: "POST" },
-      parameter: { action: "create" },
+      parameter: {
+        rout: "api/v1/products",
+        action: "create"
+      },
       postData: {
         contents: JSON.stringify({
           authorization: ENV.BASIC_OAUTH,

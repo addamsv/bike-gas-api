@@ -5,77 +5,63 @@
  */
 
 function doGET(req) {
-    const routs = _getPathData(req);
+    const rout = getReqData(req);
 
-    let route = (routs[0] === "api" && routs[1] === "v1" && routs[2]) ? routs[2] : "";
-
-    console.log("route: " + route)
-
-    const { endpoint = route, action } = req?.parameter || {};
-    switch (endpoint) {
-        case "users": { return userGetController(action, req); }
-        case "comments": { return commentGetController(action, req); }
-        case "products": { return productGetController(action, req); }
-        case "profiles": { return profileGetController(action, req); }
-        case "orders": { return orderGetController(action, req); }
-        case "foods": { return foodGetController(action, req); }
+    switch (rout.collection) {
+        case "comments": { return commentGetController(rout); }
+        case "foods": { return foodGetController(rout.action, req); }
+        case "orders": { return orderGetController(rout.action, req); }
+        case "products": { return productGetController(rout.action, req); }
+        case "profiles": { return profileGetController(rout.action, req); }
+        case "users": { return userGetController(rout.action, req); }
         default: { throw new Error("There is no GET route: " + endpoint); }
     }
 }
 
 function doPOST(req) {
-    const routs = _getPathData(req);
+    const rout = getReqData(req);
 
-    let route = (routs[0] === "api" && routs[1] === "v1" && routs[2]) ? routs[2] : "";
-
-    console.log("route: " + route)
-
-    const { endpoint = route, action } = req?.parameter || {};
-
-    switch (endpoint) {
-        case "users": { return userPostController(action, req); }
-        case "orders": { return orderPostController(action, req); }
-        case "profiles": { return profilePostController(action, req); }
-        case "comments": { return commentPostController(action, req); }
-        case "products": { return productPostController(action, req); }
+    switch (rout.collection) {
+        case "users": { return userPostController(rout.action, req); }
+        case "orders": { return orderPostController(rout.action, req); }
+        case "profiles": { return profilePostController(rout.action, req); }
+        case "comments": { return commentPostController(rout.action, req); }
+        case "products": { return productPostController(rout.action, req); }
         default: { throw new Error("There is no POST route: " + endpoint); }
     }
 }
 
 function doPUT(req) {
-    const routs = _getPathData(req);
-
-    let route = (routs[0] === "api" && routs[1] === "v1" && routs[2]) ? routs[2] : "";
-
-    console.log("route: " + route)
-
-    const { endpoint = route, action } = req?.parameter || {};
-
     switch (endpoint) {
         default: { throw new Error("There is no PUT route: " + endpoint); }
     }
 }
 
 function doDELETE(req) {
-    const routs = _getPathData(req);
-
-    let route = (routs[0] === "api" && routs[1] === "v1" && routs[2]) ? routs[2] : "";
-
-    console.log("route: " + route)
-
-    const { endpoint = route, action } = req?.parameter || {};
-
     switch (endpoint) {
         default: { throw new Error("There is no DELETE route: " + endpoint); }
     }
 }
 
-function _getPathData(req) {
-    const path = req?.pathInfo || "";
-    const routs = path.split("/").filter(Boolean);
-    // const routs = segments.slice(0, -1);
+function getReqData(req) {
+    const params = req?.parameter || {};
+    const path = params.rout || "";
+    const routes = path.split("/").filter(Boolean);
 
-    return routs;
+    const isApiV1 = routes[0] === "api" && routes[1] === "v1";
+
+    let action = params.action;
+    if (!action && req?.postData?.contents) {
+        try {
+            ({ action } = JSON.parse(req.postData.contents));
+        } catch { }
+    }
+
+    return {
+        collection: (isApiV1 && routes[2]) || params.endpoint,
+        id: (isApiV1 && routes[3]) || params.id,
+        action,
+    };
 }
 
 /*
@@ -104,6 +90,6 @@ if (typeof module !== 'undefined') {
         doGET,
         doPUT,
         doDELETE,
-        _getPathData
+        getReqData
     };
 }

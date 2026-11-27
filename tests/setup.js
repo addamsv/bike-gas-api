@@ -106,7 +106,10 @@ mockData = {
   ],
   Comments: [
     ['id', 'owner', 'product_id', 'iat', 'text'],
-    [1, '1', '1', '10-11-26'],
+    [1, '1', '1', '10-11-26', 'super'],
+    [1, '1', '1001', '10-11-26', 'super-proper'],
+    [1, '1', '1001', '10-11-26', 'wow'],
+    [1, '1', '1', '10-11-26', 'whoo-hoo'],
   ],
   Notifications: [
     ['id', 'owner', 'link', 'title', 'description'],

@@ -1,22 +1,27 @@
 "use strict";
 
-function commentGetController(action, req) {
-    switch (action) {
-        case "findCommentByProductId": {
-            const { product_id } = req.parameter;
+// function commentGetController(action, req) {
+function commentGetController(reqData) {
 
-            if (!product_id) {
-                throw new Error("comment ID is missed");
-            }
 
-            const res = getByHeaderName(product_id, "product_id", "Comments");
 
-            return res;
-        }
-        default: {
-            throw new RetError(401, e.message);
-        }
+    /** service */
+    // switch (action) {
+    // case "findCommentByProductId": {
+    // const { id } = req.parameter;
+
+    if (!reqData.id) {
+        throw new Error("product ID in comments request is missed");
     }
+
+    const res = getAllByHeaderName(reqData.id, "product_id", "Comments");
+
+    return res;
+    // }
+    // default: {
+    //     throw new RetError(401, e.message);
+    // }
+    // }
 }
 
 function commentPostController(action, req) {

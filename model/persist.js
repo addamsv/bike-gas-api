@@ -250,6 +250,34 @@ const getByHeaderName = (value, headerName, collectionName, isAuthRequired = fal
     return { collectionName, status: isSuccess ? "success" : "fail", retData: element.data };
 };
 
+const getAllByHeaderName = (value, headerName, collectionName, isAuthRequired = false) => {
+    const [headers, ...rows] = _getData(collectionName);
+    const headerIndex = headers?.indexOf(headerName) ?? -1;
+
+    if (headerIndex === -1) {
+        throw new Error(`headers do not contain name: ${headerName}`);
+    }
+
+    const retData = rows.reduce((acc, row) => {
+        if (row[headerIndex] == value) {
+            const item = {};
+
+            row.forEach((cell, idx) => {
+                const key = headers[idx] || idx;
+                if (key !== 'user_pass') {
+                    item[key] = cell;
+                }
+            });
+
+            acc.push(item);
+        }
+        return acc;
+    }, []);
+
+    return { collectionName, status: 'success', retData };
+};
+
+
 /*
 *           GAS DEPENDENCY
 */
@@ -315,6 +343,7 @@ if (typeof module !== 'undefined') {
     module.exports = {
         getUsers,
         getByHeaderName,
+        getAllByHeaderName,
         findAll,
         findById,
         updateById,
